@@ -1,5 +1,6 @@
 package demoqa.com.models;
 
+import java.util.List;
 import java.util.Objects;
 
 public class StudentData {
@@ -11,8 +12,8 @@ public class StudentData {
     private String year;
     private String month;
     private String day;
-    private String subjects; // todo Заменить на List
-    private String hobbies; // todo Заменить на List
+    private List<String> subjects;
+    private List<String > hobbies;
     private String imageName;
     private String state;
     private String city;
@@ -63,20 +64,20 @@ public class StudentData {
         return this;
     }
 
-    public String getSubjects() {
+    public List<String> getSubjects() {
         return subjects;
     }
 
-    public StudentData withSubjects(String subjects) {
+    public StudentData withSubjects(List<String> subjects) {
         this.subjects = subjects;
         return this;
     }
 
-    public String getHobbies() {
+    public List<String> getHobbies() {
         return hobbies;
     }
 
-    public StudentData withHobbies(String hobbies) {
+    public StudentData withHobbies(List<String> hobbies) {
         this.hobbies = hobbies;
         return this;
     }

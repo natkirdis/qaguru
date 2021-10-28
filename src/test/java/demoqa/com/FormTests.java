@@ -7,9 +7,9 @@ import demoqa.com.models.StudentData;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.openqa.selenium.Keys;
 
 import java.io.File;
+import java.util.List;
 
 import static com.codeborne.selenide.AssertionMode.SOFT;
 import static com.codeborne.selenide.Condition.text;
@@ -23,8 +23,6 @@ public class FormTests {
         Configuration.startMaximized = true;
         Configuration.assertionMode = SOFT;
     }
-    //todo
-    //Поменять тип для хобби, предметов
 
     @Test
     void positiveFillFormTest() {
@@ -37,8 +35,8 @@ public class FormTests {
                 .withYear("1990")
                 .withMonth("March")
                 .withDay("09")
-                .withSubjects("Maths")
-                .withHobbies("Sports")
+                .withSubjects(List.of("Maths", "Arts"))
+                .withHobbies(List.of("Sports", "Music"))
                 .withImageName("img.png")
                 .withState("NCR")
                 .withCity("Delhi")
@@ -56,10 +54,10 @@ public class FormTests {
         $(".react-datepicker__year-select").selectOption(student.getYear());
         $(".react-datepicker__day--009").click();
         $("#submit").scrollTo();
-        $("#subjectsInput").setValue(student.getSubjects()).pressEnter();
-
-        $("#hobbiesWrapper").$(byText(student.getHobbies())).click();
-
+        for (String subject : student.getSubjects()) {
+            $("#subjectsInput").setValue(subject).pressEnter();}
+        for (String hobby : student.getHobbies()) {
+            $("#hobbiesWrapper").$(byText(hobby)).click();}
         $("#uploadPicture").uploadFile(new File(student.getImagePath()));
         $("#currentAddress").setValue(student.getAddress());
         $("#state").click();
@@ -82,9 +80,9 @@ public class FormTests {
                         student.getMonth() + "," +
                         student.getYear())));
         getValue("Subjects")
-                .shouldHave((text(student.getSubjects())));
+                .shouldHave((text(formatList(student.getSubjects()))));
         getValue("Hobbies")
-                .shouldHave((text(student.getHobbies())));
+                .shouldHave((text(formatList(student.getHobbies()))));
         getValue("Picture")
                 .shouldHave((text(student.getImageName())));
         getValue("Address")
@@ -99,5 +97,11 @@ public class FormTests {
         return $(".modal-content")
                 .$(byText(fieldName))
                 .sibling(0);
+    }
+
+    private String formatList(List<String> list) {
+        return list.toString().replace("[", "")
+                .replace("'", "")
+                .replace("]", "");
     }
 }
