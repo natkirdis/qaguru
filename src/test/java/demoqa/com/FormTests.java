@@ -66,34 +66,22 @@ public class FormTests {
         $("#stateCity-wrapper").$(byText(student.getCity())).click();
         $("#submit").click();
 
-        getValue("Student Name")
-                .shouldHave(text(student.getFirstName()
-                        + " " +student.getLastName()));
-        getValue("Student Email")
-                .shouldHave((text(student.getEmail())));
-        getValue("Gender")
-                .shouldHave((text(student.getGender())));
-        getValue("Mobile")
-                .shouldHave((text(student.getNumber())));
-        getValue("Date of Birth")
-                .shouldHave((text(student.getDay() + " " +
-                        student.getMonth() + "," +
-                        student.getYear())));
-        getValue("Subjects")
-                .shouldHave((text(formatList(student.getSubjects()))));
-        getValue("Hobbies")
-                .shouldHave((text(formatList(student.getHobbies()))));
-        getValue("Picture")
-                .shouldHave((text(student.getImageName())));
-        getValue("Address")
-                .shouldHave((text(student.getAddress())));
-        getValue("State and City")
-                .shouldHave((text(student.getState()
-                        + " " + student.getCity())));
+        field("Student Name").shouldHave(text(student.getFirstName()
+                + " " +student.getLastName()));
+        field("Student Email").shouldHave((text(student.getEmail())));
+        field("Gender").shouldHave((text(student.getGender())));
+        field("Mobile").shouldHave((text(student.getNumber())));
+        field("Date of Birth").shouldHave((text(student.getDay() + " "
+                + student.getMonth() + "," + student.getYear())));
+        field("Subjects").shouldHave((text(formatList(student.getSubjects()))));
+        field("Hobbies").shouldHave((text(formatList(student.getHobbies()))));
+        field("Picture").shouldHave((text(student.getImageName())));
+        field("Address").shouldHave((text(student.getAddress())));
+        field("State and City").shouldHave((text(student.getState()
+                + " " + student.getCity())));
     }
 
-
-    private SelenideElement getValue(String fieldName) {
+    private SelenideElement field(String fieldName) {
         return $(".modal-content")
                 .$(byText(fieldName))
                 .sibling(0);
