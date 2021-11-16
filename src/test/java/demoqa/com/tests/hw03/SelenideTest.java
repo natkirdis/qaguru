@@ -1,6 +1,7 @@
 package demoqa.com.tests.hw03;
 
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +12,8 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class SelenideTest {
 
-    @BeforeAll
-    public static void setup() {
+    @BeforeEach
+    public static void precondition() {
         open("https://github.com/selenide/selenide");
         $("#wiki-tab").click();
     }
