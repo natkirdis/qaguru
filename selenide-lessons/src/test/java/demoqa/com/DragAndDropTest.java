@@ -22,22 +22,4 @@ public class DragAndDropTest {
         $("#column-a").shouldHave(Condition.text("B"));
         $("#column-b").shouldHave(Condition.text("A"));
     }
-
-    @Disabled("Doesn't work correctly. Should use selenide dragAndDropTo()")
-    @Test
-    void dragAndDropCheckWithActions() {
-        actions().dragAndDrop(Selenide.$("#column-a"), Selenide.$("#column-b"))
-                .perform();
-        $("#column-b").shouldHave(Condition.text("A"));
-        $("#column-a").shouldHave(Condition.text("B"));
-    }
-
-    @Disabled("Doesn't work correctly. Should use selenide dragAndDropTo()")
-    @Test
-    void dragAndDropCheckWithActionsOffset() {
-        actions().dragAndDropBy(Selenide.$("#column-a"), 100, 0)
-                .perform();
-        $("#column-b").shouldHave(Condition.text("A"));
-        $("#column-a").shouldHave(Condition.text("B"));
-    }
 }
