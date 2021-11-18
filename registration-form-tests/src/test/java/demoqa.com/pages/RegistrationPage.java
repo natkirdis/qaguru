@@ -1,16 +1,15 @@
 package demoqa.com.pages;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selectors;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
+import demoqa.com.models.Student;
 import demoqa.com.pages.components.CalendarComponent;
 
 import java.io.File;
 import java.util.List;
+import java.util.Map;
 
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.open;
+import static com.codeborne.selenide.Selenide.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RegistrationPage {
 
@@ -36,91 +35,97 @@ public class RegistrationPage {
 
     //actions
 
-    public void openPage() {
+    public RegistrationPage openPage() {
         Selenide.open("https://demoqa.com/automation-practice-form");
         formTitle.shouldHave(Condition.text(FORM_TITLE));
+        return this;
     }
 
-    public RegistrationPage typeFirstName(String name) {
+    public RegistrationPage fillFormFor(Student student) {
+        typeFirstName(student.getFirstName());
+        typeLastName(student.getLastName());
+        typeEmail(student.getEmail());
+        chooseGender(student.getGender());
+        typeNumber(student.getNumber());
+        calendar.withDate(student.getDay(), student.getMonth(), student.getYear());
+        scrollToThePageBottom();
+        typeSubjects(student.getSubjects());
+        typeHobbies(student.getHobbies());
+        uploadImage(new File(student.getImagePath()));
+        typeAddress(student.getAddress());
+        selectState(student.getState());
+        selectCity(student.getCity());
+        return this;
+    }
+
+    public void typeFirstName(String name) {
         firstNameInput.setValue(name);
-        return this;
     }
 
-    public RegistrationPage typeLastName(String lastName) {
+    public void typeLastName(String lastName) {
         lastNameInput.setValue(lastName);
-        return this;
     }
 
-    public RegistrationPage typeEmail(String email) {
+    public void typeEmail(String email) {
         emailInput.setValue(email);
-        return this;
     }
 
-    public RegistrationPage chooseGender(String gender) {
+    public void chooseGender(String gender) {
         Selenide.$(Selectors.byText(gender)).click();
-        return this;
     }
 
-    public RegistrationPage typeNumber(String number) {
+    public void typeNumber(String number) {
         numberInput.setValue(number);
-        return this;
     }
 
-    public RegistrationPage scrollToThePageBottom() {
+    public void scrollToThePageBottom() {
         submitButton.scrollTo();
-        return this;
     }
 
-    public RegistrationPage typeSubjects(List<String> subjects) {
+    public void typeSubjects(List<String> subjects) {
         for (String subject : subjects) {
             subjectsInput.setValue(subject).pressEnter();
         }
-        return this;
     }
 
-    public RegistrationPage typeHobbies(List<String> hobbies) {
+    public void typeHobbies(List<String> hobbies) {
         for (String hobby : hobbies) {
             hobbiesCheckBox.$(Selectors.byText(hobby)).click();
         }
-        return this;
     }
 
-    public RegistrationPage uploadImage(File file) {
+    public void uploadImage(File file) {
         fileUploadButton.uploadFile(file);
-        return this;
     }
 
-    public RegistrationPage typeAddress(String address) {
+    public void typeAddress(String address) {
         addressInput.setValue(address);
-        return this;
     }
 
-    public RegistrationPage selectCity(String city) {
+    public void selectCity(String city) {
         CityDropdown.click();
         StateBlock.$(Selectors.byText(city)).click();
-        return this;
     }
 
-    public RegistrationPage selectState(String state) {
+    public void selectState(String state) {
         StateDropdown.click();
         StateBlock.$(Selectors.byText(state)).click();
-        return this;
     }
 
-    public RegistrationPage submitForm() {
+    public void submitForm() {
         submitButton.click();
-        return this;
     }
+
 
     //checks
-    public RegistrationPage checkResultValues(String key, String value) {
-        field(key).shouldHave(Condition.text(value));
-        return this;
-    }
 
-    private SelenideElement field(String fieldName) {
-        return $(".modal-content")
-                .$(Selectors.byText(fieldName))
-                .sibling(0);
+    public void checkResult(Map<String, String> expectedData) {
+        ElementsCollection lines = $$(".table-responsive tbody tr").snapshot();
+        for (SelenideElement line: lines) {
+            String key = line.$("td").text();
+            String expectedValue = expectedData.get(key);
+            String actualValue = line.$("td", 1).text();
+            assertEquals(expectedValue, actualValue, "any message here");
+        }
     }
 }

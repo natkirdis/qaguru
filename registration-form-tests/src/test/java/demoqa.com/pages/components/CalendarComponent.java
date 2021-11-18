@@ -11,7 +11,7 @@ public class CalendarComponent {
             monthPickerElement = $(".react-datepicker__month-select"),
             yearPickerElement = $(".react-datepicker__year-select");
 
-    public void setDate(String day, String month, String year) {
+    public void withDate(String day, String month, String year) {
         dateOfBirthdayInput.click();
         monthPickerElement.selectOption(month);
         yearPickerElement.selectOption(year);
