@@ -68,6 +68,10 @@ public class StudentData {
         return subjects;
     }
 
+    public String getFormattedSubjects() {
+        return formatList(subjects);
+    }
+
     public StudentData withSubjects(List<String> subjects) {
         this.subjects = subjects;
         return this;
@@ -75,6 +79,10 @@ public class StudentData {
 
     public List<String> getHobbies() {
         return hobbies;
+    }
+
+    public String getFormattedHobbies() {
+        return formatList(hobbies);
     }
 
     public StudentData withHobbies(List<String> hobbies) {
@@ -161,5 +169,11 @@ public class StudentData {
     @Override
     public int hashCode() {
         return Objects.hash(firstName, lastName, email, number, gender, year, month, day, subjects, hobbies, imageName, state, city, address);
+    }
+
+    private String formatList(List<String> list) {
+        return list.toString().replace("[", "")
+                .replace("'", "")
+                .replace("]", "");
     }
 }
