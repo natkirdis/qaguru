@@ -9,7 +9,6 @@ import java.io.File;
 import java.util.List;
 
 //TODO Добавьте в ваш код генерацию рандомных значений используя Java Faker
-//TODO Разобраться с TODO в Pages
 
 @ExtendWith({SoftAssertsExtension.class})
 public class RegistrationFormTests extends TestBase {
@@ -38,8 +37,11 @@ public class RegistrationFormTests extends TestBase {
                 .typeLastName(student.getLastName())
                 .typeEmail(student.getEmail())
                 .chooseGender(student.getGender())
-                .typeNumber(student.getNumber())
-                .setBirthDay(student.getDay(), student.getMonth(), student.getYear())
+                .typeNumber(student.getNumber());
+        registrationPage
+                .calendar.setDate(student.getDay(), student.getMonth(), student.getYear());
+
+        registrationPage
                 .scrollToThePageBottom()
                 .typeSubjects(student.getSubjects())
                 .typeHobbies(student.getHobbies())

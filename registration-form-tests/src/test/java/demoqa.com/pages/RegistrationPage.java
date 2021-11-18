@@ -4,6 +4,7 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selectors;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
+import demoqa.com.pages.components.CalendarComponent;
 
 import java.io.File;
 import java.util.List;
@@ -22,9 +23,6 @@ public class RegistrationPage {
             lastNameInput = $("#lastName"),
             emailInput = $("#userEmail"),
             numberInput = $("#userNumber"),
-            dateOfBirthdayInput = $("#dateOfBirthInput"),
-            monthPickerElement = $(".react-datepicker__month-select"),
-            yearPickerElement = $(".react-datepicker__year-select"),
             submitButton = $("#submit"),
             subjectsInput = $("#subjectsInput"),
             hobbiesCheckBox = $("#hobbiesWrapper"),
@@ -34,6 +32,7 @@ public class RegistrationPage {
             CityDropdown = $("#city"),
             StateBlock = $("#stateCity-wrapper");
 
+    public CalendarComponent calendar = new CalendarComponent();
 
     //actions
 
@@ -64,14 +63,6 @@ public class RegistrationPage {
 
     public RegistrationPage typeNumber(String number) {
         numberInput.setValue(number);
-        return this;
-    }
-
-    public RegistrationPage setBirthDay(String day, String month, String year) {
-        dateOfBirthdayInput.click();
-        monthPickerElement.selectOption(month);
-        yearPickerElement.selectOption(year);
-        $(String.format(".react-datepicker__day--0%s", day)).click();
         return this;
     }
 
