@@ -1,0 +1,3 @@
+include 'registration-form-tests'
+include 'selenide-lessons'
+
