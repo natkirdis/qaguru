@@ -17,9 +17,9 @@ import static org.openqa.selenium.By.partialLinkText;
 
 public class SelenideWithListenerTest {
 
-    private static String BASEURL = "https://github.com/";
+    private static String BASE_URL = "https://github.com/";
     private static final String REPOSITORY = "eroshenkoam/allure-example";
-    private static final String ISSUE_NUMBER = "68" ;
+    private static final String ISSUE_NAME = "69 nice";
 
     @Owner("natkirdis")
     @Feature("Github")
@@ -30,7 +30,7 @@ public class SelenideWithListenerTest {
         SelenideLogger.addListener("allure", new AllureSelenide());
 
         // Открываем страницу Github
-        open(BASEURL);
+        open(BASE_URL);
 
         // Переходим в репозеторий
         $(".header-search-input").click();
@@ -41,7 +41,10 @@ public class SelenideWithListenerTest {
         // Переходим на вкладку Issues
         $(partialLinkText("Issues")).click();
 
-        // Проверяем, что отображается номер ISSUE
-        $(withText(ISSUE_NUMBER)).shouldBe(Condition.visible);
+        // Переходим в Issue
+        $(withText(ISSUE_NAME)).click();
+
+        // Проверяем заголовок Issue
+        $(".js-issue-title").shouldHave(Condition.text(ISSUE_NAME));
     }
 }

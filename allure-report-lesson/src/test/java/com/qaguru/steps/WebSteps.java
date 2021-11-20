@@ -44,9 +44,20 @@ public class WebSteps {
         $(withText("#" + number)).shouldBe(Condition.visible);
     }
 
+    @Step("Открываем Issue {name}")
+    public void openIssue(String name) {
+        $(withText(name)).click();
+    }
+
+    @Step("Проверяем, что заволовок Issue {name}")
+    public void issueTitleShouldBe(String name) {
+        $(".js-issue-title").shouldHave(Condition.text(name));
+    }
+
     @Attachment(value = "Screenshot", type = "image/png", fileExtension = "png")
     public byte[] takeScreenshot() {
         WebDriver driver = WebDriverRunner.getWebDriver();
         return ((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
     }
+
 }

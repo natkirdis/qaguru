@@ -16,9 +16,9 @@ import static org.openqa.selenium.By.partialLinkText;
 
 public class StepLambdaTest {
 
+    private static final String BASE_URL = "https://github.com/";
     private static final String REPOSITORY = "eroshenkoam/allure-example";
-    private static final String BASEPAGE = "https://github.com/";
-    private static final Integer ISSUE_NUMBER = 68;
+    private static final String ISSUE_NAME = "69 nice";
 
     @Owner("natkirdis")
     @Feature("Github")
@@ -26,8 +26,8 @@ public class StepLambdaTest {
     @DisplayName("Issue number check")
     @Test
     public void testGithub() {
-        step("Открываем главную страницу", () -> {
-            open(BASEPAGE);
+        step("Открываем страницу " + BASE_URL, () -> {
+            open(BASE_URL);
         });
         step("Ищем репозиторий " + REPOSITORY, () -> {
             $(".header-search-input").click();
@@ -40,8 +40,11 @@ public class StepLambdaTest {
         step("Открываем таб Issues", () -> {
             $(partialLinkText("Issues")).click();
         });
-        step("Проверяем, что существует Issue с номером " + ISSUE_NUMBER, () -> {
-            $(withText("#" + ISSUE_NUMBER)).shouldBe(Condition.visible);
+        step("Переходим в Issue " + ISSUE_NAME, () -> {
+            $(withText(ISSUE_NAME)).click();
+        });
+        step("Проверяем, что заголовок " + ISSUE_NAME, () -> {
+            $(".js-issue-title").shouldHave(Condition.text(ISSUE_NAME));
         });
     }
 }
