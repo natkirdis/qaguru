@@ -14,11 +14,27 @@ public class RegistrationFormTests extends TestBase {
 
     @Test
     void positiveFillFormTest() {
+        Map<String, String> expectedData = new HashMap<>()
+        {{
+            put("Student Name", student.getFirstName()
+                    + " " + student.getLastName());
+            put("Student Email", student.getEmail());
+            put("Gender", student.getGender());
+            put("Mobile", student.getNumber());
+            put("Date of Birth", student.getDay() + " "
+                    + student.getMonth() + "," + student.getYear());
+            put("Subjects", student.getFormattedSubjects());
+            put("Hobbies", student.getFormattedHobbies());
+            put("Picture", student.getImageName());
+            put("Address", student.getAddress());
+            put("State and City", student.getState()
+                    + " " + student.getCity());
+        }};
 
         registrationPage.openPage()
                 .fillFormFor(student)
                 .submitForm();
 
-        registrationPage.checkResult(student.getResultStudentData());
+        registrationPage.checkResult(expectedData);
     }
 }

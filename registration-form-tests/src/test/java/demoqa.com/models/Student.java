@@ -1,7 +1,9 @@
 package demoqa.com.models;
 
 import java.security.SecureRandom;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.time.format.FormatStyle;
 import java.util.*;
@@ -223,24 +225,5 @@ public class Student {
         return list.toString().replace("[", "")
                 .replace("'", "")
                 .replace("]", "");
-    }
-
-    public Map<String, String> getResultStudentData() {
-        return new HashMap<>()
-        {{
-            put("Student Name", getFirstName()
-                    + " " + getLastName());
-            put("Student Email", getEmail());
-            put("Gender", getGender());
-            put("Mobile", getNumber());
-            put("Date of Birth", getDay() + " "
-                    + getMonth() + "," + getYear());
-            put("Subjects", getFormattedSubjects());
-            put("Hobbies", getFormattedHobbies());
-            put("Picture", getImageName());
-            put("Address", getAddress());
-            put("State and City", getState()
-                    + " " + getCity());
-        }};
     }
 }
