@@ -5,7 +5,6 @@ import com.codeborne.selenide.Configuration;
 import demoqa.com.pages.RegistrationPage;
 import org.junit.jupiter.api.BeforeAll;
 
-import static com.codeborne.selenide.AssertionMode.SOFT;
 
 public class TestBase {
 
